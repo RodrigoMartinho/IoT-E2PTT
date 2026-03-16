@@ -12,7 +12,8 @@ Trabalho da matéria Plataformas de prototipação para IoT
 - 2 Push button
 - Resistor 220 Ohms
 
-- ![Dispositivo](Dispositivo.jpg)
+ ![Dispositivo](Dispositivo.jpg)
+ ![Tela](Tela.jpg)
 
 # Sistema Operacional e Softwares Utilizados
 
