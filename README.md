@@ -39,3 +39,8 @@ Na parte de codificação em ArduinoIDE, separei o código em vários arquivos, 
  - communication.h (codificação Wifi, MQTT e WiFiManager)
  - common.h (codificação do temporizador)
  - IoT.ino (código principal do projeto)
+
+   # Acesso ao dashboard
+
+   http://iotifspcat.ddns.net:1880/dashboard
+   
