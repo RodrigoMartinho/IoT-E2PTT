@@ -15,7 +15,7 @@ Trabalho da matéria Plataformas de prototipação para IoT
 # Sistema Operacional e Softwares Utilizados
 
  - Servidor Linux 24.04 hospedado no GCP (Google Cloud Platform).
- - Banco de Dados MySQL
+ - Banco de Dados MySQL (instruções da instalação, configuração e scripts SQL no arquivo scriptsDB.SQL)
  - Mosquitto (MQTT)
  - NodeRED (criação dos fluxos, para comunicação via MQTT e salvar os dados em MySQL).
  - ArduinoIDE para codificar o ESP32
