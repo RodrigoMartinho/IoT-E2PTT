@@ -18,7 +18,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 WiFiManager wm;
 
-void setup_wifi() {
+void setupWifi() {
     wm.setConfigPortalTimeout(180);
 
     // O autoConnect trava a execução aqui até conectar ou dar timeout
@@ -46,7 +46,7 @@ bool interpretarPayload(byte* payload, unsigned int length) {
   return false;
 }
 
-void reconnect_mqtt() {
+void reconnectMqtt() {
   if (client.connected()) {
     return;
   }
@@ -64,7 +64,7 @@ void reconnect_mqtt() {
   }
 }
 
-void setup_mqtt(){
+void setupMqtt(){
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
 }

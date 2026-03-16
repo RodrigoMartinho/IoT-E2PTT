@@ -9,16 +9,21 @@
 #define LED_PIN 17
 #define NUM_LEDS 1
 #define BUTTON_PIN 7
+#define BUTTONMIC_PIN 37
 
-int botao_ultimoEstado = HIGH;
+int botaoUltimoEstado = HIGH;
+int botaoMicUltimoEstado = HIGH;
+
 bool luzLigada = false;
+bool micLigado = false;
 bool wifiOk = false;
+float valorDbAtual = 0.0;
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LED_RGB, NEO_GRB + NEO_KHZ800);
 
 Temporizador timerMic(1000);       //Captura do microfone - 1 segundo 
 Temporizador timerWifi(10000);     //Status do WiFi       - 10 segundos 
-Temporizador timerDisplay(2000);   //Tela                 - 2 segundos
+Temporizador timerDisplay(500);    //Tela                  - 1/2 segundo
 Temporizador timerMQTT(5000);      //MQTT                 - 5 segundos
 
 void acenderLuz(){
@@ -39,16 +44,16 @@ void apagarLuz(){
   luzLigada = false;
 }
 
-void status_Botao() {
-  int botao_estadoAtual = digitalRead(BUTTON_PIN);
+void statusBotao() {
+  int botaoEstadoAtual = digitalRead(BUTTON_PIN);
 
   // Lógica de Detecção de Borda (Edge Detection)
   // Só entra no IF se o botão mudou de SOLTO para PRESSIONADO
-  if (botao_ultimoEstado == LOW && botao_estadoAtual == HIGH) {
+  if (botaoUltimoEstado == LOW && botaoEstadoAtual == HIGH) {
     
-    statusAceso = !statusAceso; 
+    luzLigada = !luzLigada; 
 
-    if (statusAceso) {
+    if (luzLigada) {
       acenderLuz();
       client.publish(topic_luz_state, "ON", true); 
     } else {
@@ -56,16 +61,33 @@ void status_Botao() {
       client.publish(topic_luz_state, "OFF", true); 
     }
 
-    desenharTela(valorDbAtual, luzLigada, wifiOk); 
+    desenharTela(valorDbAtual, luzLigada, wifiOk, micLigado); 
   
     Serial.print("O status mudou para: ");
-    Serial.println(statusAceso ? "ACESO" : "APAGADO");
+    Serial.println(luzLigada ? "ACESO" : "APAGADO");
 
     // Pequeno delay para debounce (evita ruído elétrico)
     delay(50); 
   }
 
-  botao_ultimoEstado = botao_estadoAtual;
+  botaoUltimoEstado = botaoEstadoAtual;
+}
+
+void statusBotaoMic() {
+  int botaoMicEstadoAtual = digitalRead(BUTTONMIC_PIN);
+
+  if (botaoMicUltimoEstado == LOW && botaoMicEstadoAtual == HIGH) {
+    micLigado = !micLigado; 
+
+    desenharTela(valorDbAtual, luzLigada, wifiOk, micLigado); 
+
+    Serial.print("Microfone: ");
+    Serial.println(micLigado ? "LIGADO" : "DESLIGADO");
+
+    delay(50); 
+  }
+
+  botaoMicUltimoEstado = botaoMicEstadoAtual;
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -81,8 +103,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
     }
     
     // Força a atualização do display com os dados atuais
-    bool wifiOk = (WiFi.status() == WL_CONNECTED);
-    desenharTela(valorDbAtual, luzLigada, wifiOk);
+    // bool wifiOk = (WiFi.status() == WL_CONNECTED);
+    // desenharTela(valorDbAtual, luzLigada, wifiOk, micLigado);
   }
 }
 
@@ -90,36 +112,38 @@ void setup() {
   Serial.begin(115200);
 
   pinMode(BUTTON_PIN, INPUT_PULLUP); 
+  pinMode(BUTTONMIC_PIN, INPUT_PULLUP); 
+  //LED
+  pinMode(LED_PIN, OUTPUT);
 
-  setup_display();
+  setupDisplay();
 
   //LED RGB da placa
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
 
-  //LED
-  pinMode(LED_PIN, OUTPUT);
+  setupWifi();
 
-  setup_wifi();
+  setupMqtt();
 
-  setup_mqtt();
-
-  setup_mic();
+  setupMic();
 }
 
 void loop() {
   
+  if (timerDisplay.pronto()) {
+    desenharTela(valorDbAtual, luzLigada, wifiOk, micLigado); 
+  }
+
   if (!client.connected() && timerMQTT.pronto()) {
-    reconnect_mqtt();
+    reconnectMqtt();
   }else{
     client.loop();
   }
-  
-  status_Botao();
 
-  if (timerDisplay.pronto()) {
-    desenharTela(valorDbAtual, luzLigada, wifiOk); 
-  }  
+  statusBotao();
+  
+  statusBotaoMic();
 
   if (timerWifi.pronto()) {
      wifiOk = (WiFi.status() == WL_CONNECTED);
@@ -127,12 +151,16 @@ void loop() {
     if (!wifiOk) {
         Serial.println("WiFi Desconectado... tentando reconectar em background.");
     }else{
-      enviar_decibeis(valorDbAtual);
+      if (micLigado) {        
+        enviar_decibeis(valorDbAtual);
+      }
     }
   } 
 
-  if (timerMic.pronto()) {
-     valorDbAtual = lerMic(); 
-     desenharTela(valorDbAtual, luzLigada, wifiOk ); 
+  if (micLigado && timerMic.pronto()) {
+     valorDbAtual = lerMic();      
   }
+
+
+
 }

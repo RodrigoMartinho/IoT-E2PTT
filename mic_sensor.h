@@ -12,7 +12,7 @@
 
 #define SAMPLE_BLOCK 2048
 
-void setup_mic(){
+void setupMic(){
   // Configuração da estrutura I2S
   const i2s_config_t i2s_config = {
     .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX),

@@ -16,10 +16,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);  //Lig
 #define I2C_SDA 8
 #define I2C_SCL 9
 
-bool statusAceso = false;
-float valorDbAtual = 0.0;
-
-void setup_display(){
+void setupDisplay(){
   Wire.begin(I2C_SDA, I2C_SCL);
 
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
@@ -44,7 +41,7 @@ void mostrarTela(String Titulo, String valor) {
   display.display();                // Atualiza o display com as informações
 }
 
-void desenharTela(float decibel, bool luzLigada, bool wifiConectado) {
+void desenharTela(float decibel, bool luzLigada, bool wifiConectado, bool micLigado) {
   display.clearDisplay();
   display.setTextColor(SSD1306_WHITE);
 
@@ -64,15 +61,20 @@ void desenharTela(float decibel, bool luzLigada, bool wifiConectado) {
     display.drawBitmap(0, 20, bitmap_luz_off, 40, 40, SSD1306_WHITE);
   }
 
-  display.setTextSize(2);
-  display.setCursor(50, 35); 
-  display.print((int)decibel);
+  if (micLigado) {
+    display.setTextSize(2);
+    display.setCursor(50, 35); 
+    display.print((int)decibel);
+    
+    display.setTextSize(1);
+    display.print("dB");
+
+    display.drawBitmap(96, 24, bitmap_mic_on, 32, 32, SSD1306_WHITE);
+  }else{
+    display.drawBitmap(96, 24, bitmap_mic_off, 32, 32, SSD1306_WHITE);    
+  }
   
-  display.setTextSize(1);
-  display.print("dB");
-
-  display.drawBitmap(96, 24, bitmap_som_alto, 32, 32, SSD1306_WHITE);
-
+  
   display.display();
 }
 
