@@ -17,8 +17,9 @@ Trabalho da matéria Plataformas de prototipação para IoT
  - Servidor Linux 24.04 hospedado no GCP (Google Cloud Platform).
  - Banco de Dados MySQL (instruções da instalação, configuração e scripts SQL no arquivo scriptsDB.SQL)
  - Mosquitto - MQTT (instruções de instalação e configuração no arquivo mosquitto.txt)
- - NodeRED (criação dos fluxos, para comunicação via MQTT e salvar os dados em MySQL. Fluxos no arquivo fluxos.json).
- - ArduinoIDE para codificar o ESP32
+ - NodeRED (instruções de instalação e configuração no arquivo nodeRED.txt.
+            Criação de fluxos via nodeRED, para comunicação via MQTT e salvar os dados em MySQL. Fluxos no arquivo fluxos.json).
+ - ArduinoIDE para codificar o ESP32 (bibliotecas  instaladas no ArduinoIDE: PubSubClient, WiFiManager, Adafruit SSD1306) 
 
 # Como o projeto funciona
 
