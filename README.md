@@ -12,6 +12,8 @@ Trabalho da matéria Plataformas de prototipação para IoT
 - 2 Push button
 - Resistor 220 Ohms
 
+- ![Dispositivo](dispositivo.jpg)
+
 # Sistema Operacional e Softwares Utilizados
 
  - Servidor Linux 24.04 hospedado no GCP (Google Cloud Platform).
