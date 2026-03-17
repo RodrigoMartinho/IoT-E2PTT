@@ -14,9 +14,9 @@ Abrir o arquivo de configurações do mosquitto
 ```console
   sudo nano /etc/mosquitto/mosquitto.conf
 ```
-  Inserir as seguintes linhas (sem segurança):
-    listener 1883 
-    allow_anonymous true
+  Inserir as seguintes linhas (sem segurança):  
+    listener 1883  
+    allow_anonymous true  
   
   aperte CTRL + X para salvar
 
