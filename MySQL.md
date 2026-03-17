@@ -37,6 +37,7 @@ Selecione o método de senha 0 - Baixo | 1 - Medio | 2 - Alto e o restante coloq
 ```console
   mysql -u iot -p
 ```
+após o comando acima, será solicitada a senha. Insira a senha.
 
 ```sql
   USE IoT;
