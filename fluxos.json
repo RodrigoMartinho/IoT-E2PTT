@@ -51,7 +51,7 @@
     {
         "id": "4c8421628cebe4a2",
         "type": "ui-base",
-        "name": "My Dashboard",
+        "name": "IoT",
         "path": "/dashboard",
         "appIcon": "",
         "includeClientData": true,
@@ -90,7 +90,7 @@
     {
         "id": "b5818edf498a04ef",
         "type": "ui-page",
-        "name": "Dashboard",
+        "name": "Microfone",
         "ui": "4c8421628cebe4a2",
         "path": "/page1",
         "icon": "home",
@@ -126,9 +126,59 @@
     {
         "id": "9600233632be2208",
         "type": "ui-group",
-        "name": "Group 2",
+        "name": "Microfone",
         "page": "b5818edf498a04ef",
         "width": "6",
+        "height": 1,
+        "order": 1,
+        "showTitle": false,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "25cb904e607d1f33",
+        "type": "ui-page",
+        "name": "Luzes",
+        "ui": "4c8421628cebe4a2",
+        "path": "/page2",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "20c7267821a8235a",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 2,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "56e3cde2fed957ac",
+        "type": "ui-group",
+        "name": "Luz",
+        "page": "25cb904e607d1f33",
+        "width": 6,
         "height": 1,
         "order": 1,
         "showTitle": false,
@@ -143,8 +193,8 @@
         "z": "f00ad3ea53f3c7ed",
         "mydb": "4629feaec45f0e15",
         "name": "MySQL",
-        "x": 880,
-        "y": 160,
+        "x": 940,
+        "y": 280,
         "wires": [
             []
         ]
@@ -163,18 +213,18 @@
         "correl": "",
         "expiry": "",
         "broker": "d2f664d52c828c87",
-        "x": 660,
-        "y": 260,
+        "x": 680,
+        "y": 500,
         "wires": []
     },
     {
         "id": "ff658ff4336ff480",
         "type": "ui-template",
         "z": "f00ad3ea53f3c7ed",
-        "group": "9600233632be2208",
+        "group": "56e3cde2fed957ac",
         "page": "",
         "ui": "",
-        "name": "",
+        "name": "Botão Luz",
         "order": 1,
         "width": 0,
         "height": 0,
@@ -185,8 +235,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 420,
-        "y": 260,
+        "x": 400,
+        "y": 500,
         "wires": [
             [
                 "35f7540ddd6346bb",
@@ -211,8 +261,8 @@
         "topic": "",
         "payload": "ON",
         "payloadType": "str",
-        "x": 210,
-        "y": 160,
+        "x": 190,
+        "y": 400,
         "wires": [
             [
                 "ff658ff4336ff480"
@@ -236,8 +286,8 @@
         "topic": "",
         "payload": "OFF",
         "payloadType": "str",
-        "x": 210,
-        "y": 360,
+        "x": 190,
+        "y": 600,
         "wires": [
             [
                 "ff658ff4336ff480"
@@ -248,7 +298,7 @@
         "id": "35f7540ddd6346bb",
         "type": "function",
         "z": "f00ad3ea53f3c7ed",
-        "name": "Salvar Dados Luz",
+        "name": "Salvar Status Luz",
         "func": "if (!msg.payload) return null;\n\n\n// 2. Mapeia os dados vindo do ESP32 (Atenção aos nomes exatos)\nvar status = msg.payload;\n\n// 3. Monta a Query SQL garantindo que nenhum valor seja nulo\nmsg.topic = \"INSERT INTO RegistroLuzes (status) VALUES ('\" + status + \"')\";\n\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
@@ -256,8 +306,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 650,
-        "y": 160,
+        "x": 670,
+        "y": 600,
         "wires": [
             [
                 "a6e364575edd771e"
@@ -277,8 +327,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 150,
-        "y": 260,
+        "x": 130,
+        "y": 500,
         "wires": [
             [
                 "ff658ff4336ff480"
@@ -298,8 +348,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 130,
-        "y": 40,
+        "x": 110,
+        "y": 280,
         "wires": [
             [
                 "f0245ac53ce499ab",
@@ -311,7 +361,7 @@
         "id": "f0245ac53ce499ab",
         "type": "function",
         "z": "f00ad3ea53f3c7ed",
-        "name": "Salvar Dados Som",
+        "name": "Salvar Medições Som",
         "func": "if (!msg.payload) return null;\n\nvar decibeis = msg.payload.decibeis;\n\nmsg.topic = \"INSERT INTO Medicoes (sensor, valor) VALUES ('som', \"\n    + (decibeis ? decibeis : 0) + \")\";\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,
@@ -319,8 +369,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 650,
-        "y": 40,
+        "x": 680,
+        "y": 280,
         "wires": [
             [
                 "a6e364575edd771e"
@@ -383,14 +433,148 @@
         "height": 8,
         "className": "",
         "interpolation": "linear",
-        "x": 420,
-        "y": 80,
+        "x": 400,
+        "y": 340,
         "wires": [
             []
         ]
     },
     {
-        "id": "a0c396be8ddebe3b",
+        "id": "04cf8977627b1770",
+        "type": "mqtt in",
+        "z": "f00ad3ea53f3c7ed",
+        "name": "",
+        "topic": "monitoramento/som/status",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d2f664d52c828c87",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "f15252b6c9e5782a"
+            ]
+        ]
+    },
+    {
+        "id": "fd6c75dbb845ce3f",
+        "type": "mqtt out",
+        "z": "f00ad3ea53f3c7ed",
+        "name": "",
+        "topic": "monitoramento/som/set",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d2f664d52c828c87",
+        "x": 690,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "f15252b6c9e5782a",
+        "type": "ui-template",
+        "z": "f00ad3ea53f3c7ed",
+        "group": "9600233632be2208",
+        "page": "",
+        "ui": "",
+        "name": "Botão Microfone",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "head": "",
+        "format": "<template>\n    <v-btn class=\"button\" stacked @click=\"alternar\">\n        <div class=\"title\">Microfone</div>\n        <v-icon class=\"icon\" :style=\"estiloIcone\">{{ icon }}</v-icon>\n    </v-btn>\n</template>\n\n<script>\n    export default {\n        data() {\n            return {\n                value: \"OFF\"\n            };\n        },\n        computed: {\n            icon() {\n                return this.value === \"ON\" ? \"mdi-microphone\" : \"mdi-microphone-off\";\n            },\n            estiloIcone() {\n                return {\n                    color: this.value === \"ON\" ? '#BD9608' : '#A9A9A9',\n                    textShadow: this.value === \"ON\" ? '0px 0px 10px #BD9608' : '0px 0px 0px',\n                    fontSize: '40px'\n                };\n            }\n        },\n        methods: {\n            alternar: function () {\n                if (this.value === 'ON') {\n                    this.desligar();\n                } else {\n                    this.ligar();\n                }\n            },\n            ligar: function () {\n                if (this.value === 'OFF') {\n                    this.send({ payload: 'ON' });\n                    this.value = \"ON\";\n                }\n            },\n            desligar: function () {\n                if (this.value === 'ON') {\n                    this.send({ payload: 'OFF' });\n                    this.value = \"OFF\";\n                }\n            }\n        },\n        watch: {\n            msg: function(val) {\n                if (val && val.payload !== undefined) {\n                    // Sincroniza o estado interno com o que vem do ESP (payload)\n                    if (val.payload === \"ON\" || val.payload === \"OFF\") {\n                        this.value = val.payload;\n                    }\n                }\n            }\n        }\n    }\n</script>\n\n<style>\n    .button {\n        display: flex;\n        flex-direction: column;\n        margin: auto;\n        height: 100% !important;\n        width: 100% !important;\n        background-color: #c0dbfa !important;\n        color: #000000 !important;\n        border: 1px solid #000000;\n        border-radius: 18px;\n    }\n</style>",
+        "storeOutMessages": true,
+        "passthru": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 420,
+        "y": 120,
+        "wires": [
+            [
+                "fd6c75dbb845ce3f",
+                "64678d0e52817185"
+            ]
+        ]
+    },
+    {
+        "id": "aa5f4f1a49afea2f",
+        "type": "inject",
+        "z": "f00ad3ea53f3c7ed",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 190,
+        "y": 40,
+        "wires": [
+            [
+                "f15252b6c9e5782a"
+            ]
+        ]
+    },
+    {
+        "id": "207f5599eeef406c",
+        "type": "inject",
+        "z": "f00ad3ea53f3c7ed",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "OFF",
+        "payloadType": "str",
+        "x": 190,
+        "y": 200,
+        "wires": [
+            [
+                "f15252b6c9e5782a"
+            ]
+        ]
+    },
+    {
+        "id": "64678d0e52817185",
+        "type": "function",
+        "z": "f00ad3ea53f3c7ed",
+        "name": "Salvar Status Microfone",
+        "func": "if (!msg.payload) return null;\n\n\n// 2. Mapeia os dados vindo do ESP32 (Atenção aos nomes exatos)\nvar status = msg.payload;\n\n// 3. Monta a Query SQL garantindo que nenhum valor seja nulo\nmsg.topic = \"INSERT INTO RegistroLuzes (status) VALUES ('\" + status + \"')\";\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1a2ea37846664acb",
         "type": "global-config",
         "env": [],
         "modules": {
