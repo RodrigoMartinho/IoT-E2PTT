@@ -9,7 +9,9 @@ Selecione o método de senha 0 - Baixo | 1 - Medio | 2 - Alto e o restante coloq
   → sudo mysql (abrir o mysql)
 
 # Criar o Database
+```sql
   CREATE DATABASE IoT;
+```
 
 # Criar usuário e senha
 ```sql
@@ -26,8 +28,9 @@ Selecione o método de senha 0 - Baixo | 1 - Medio | 2 - Alto e o restante coloq
 # Acessar o MySQL 
 → mysql -u iot -p (após ENTER, inserir a senha do usuário)
 
+```sql
 USE IoT;
-
+```
 # Criação das tabelas
 ```sql
 CREATE TABLE Historico (id int NOT NULL AUTO_INCREMENT, data_hora timestamp NULL DEFAULT ((now() - interval 3 hour)), sensor varchar(10), status varchar(3) DEFAULT 'OFF', PRIMARY KEY (id));
