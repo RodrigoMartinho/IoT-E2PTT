@@ -8,8 +8,9 @@
 
 Caso não tenha o nano instalado
 ```console
-  → sudo apt install nano
+  sudo apt install nano
 ```
+Abrir o arquivo de configurações do mosquitto
 ```console
   sudo nano /etc/mosquitto/mosquitto.conf
 ```
@@ -28,17 +29,18 @@ Caso não tenha o nano instalado
 
 # Segurança no MQTT
 ```console
-  → sudo mosquitto_passwd -c /etc/mosquitto/passwd <usuario>
+  sudo mosquitto_passwd -c /etc/mosquitto/passwd <usuario>
 
-  → sudo nano /etc/mosquitto/mosquitto.conf
+  sudo nano /etc/mosquitto/mosquitto.conf
 ```
 
   Inserir as seguintes linhas:
     listener 1883 0.0.0.0
     allow_anonymous false
     password_file /etc/mosquitto/passwd
+```console
+  sudo systemctl restart mosquitto (reiniciar o mosquitto)
 
-  → sudo systemctl restart mosquitto (reiniciar o mosquitto)
-
-  → sudo chown mosquitto:mosquitto /etc/mosquitto/passwd
-  → sudo chmod 0640 /etc/mosquitto/passwd
+  sudo chown mosquitto:mosquitto /etc/mosquitto/passwd
+  sudo chmod 0640 /etc/mosquitto/passwd
+```
