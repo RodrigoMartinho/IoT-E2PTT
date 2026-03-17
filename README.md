@@ -43,7 +43,7 @@ O Fluxo dos botões é bidirecional, ou seja, se ligar no dispositivo, irá apar
 
 Ambos os botões podem ser ligados remotamente, ou diretamente no dispositivo.
 
-Na parte de codificação em ArduinoIDE, separei o código em vários arquivos, para melhor compreensão:
+Na parte de codificação em ArduinoIDE (pasta Source), separei o código em vários arquivos, para melhor compreensão:
  - display.h (codificação do display OLED)
  - imagens.h (codificação das imagens que aparecem no visor)
  - mic_sensor.h (codificação do sensor de microfone)
