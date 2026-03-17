@@ -32,11 +32,13 @@ e insere a senha dessa rede. Abrir o endereço 192.168.4.1 no navegador do celul
 
 Após conectado ao Wifi, o sistema inicializa o visor com as informações de Wifi ligado/desligado, led ligado/desligado e microfone ligado/desligado.
 
-Ao apertar um botão ao lado da Luz, ele acende o LED e envia via MQTT a informação que a luz está acesa. O dashboard vai ficar com a luz acesa, e 
+Ao apertar um botão ao lado da Luz, ele acende o LED e envia via MQTT a informação que a luz está acesa. O dashboard vai ficar com o botão Luz acesa, e 
 se clicar no botão do dashboard, ele apaga a luz do dispositivo.
 
 Ao apertar um botão ao lado do microfone, ele começa a "escutar" e enviar a medição via MQTT a cada 1 segundo, além de enviar a informação que o Microfone está ligado. 
-O dashboard irá ficar com o microfone ligado, e se clicar no botão do dashboard, ele desligar o microfone no dispositivo.
+O dashboard irá ficar com o botão Microfone ligado, e se clicar no botão do dashboard, ele desliga o microfone no dispositivo. 
+
+O Fluxo dos botões é bidirecional, ou seja, se ligar no dispositivo, irá aparecer ligado no dashboard e vice-versa.
 
 Ambos os botões podem ser ligados remotamente, ou diretamente no dispositivo.
 
