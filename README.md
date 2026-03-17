@@ -31,10 +31,14 @@ Ao ligar o dispositivo, ele inicia em modo Access Point, efetua a conexão na re
 e insere a senha dessa rede.
 
 Após conectado ao Wifi, o sistema inicializa o visor com as informações de Wifi ligado/desligado, led ligado/desligado e microfone ligado/desligado.
+
 Ao apertar um botão ao lado da Luz, ele acende o LED e envia via MQTT a informação que a luz está acesa. O dashboard vai ficar com a luz acesa, e 
 se clicar no botão do dashboard, ele apaga a luz do dispositivo.
 
-Ao apertar um botão ao lado do microfone, ele começa a "escutar" e a cada 5 segundos, ele envia a medição via MQTT.
+Ao apertar um botão ao lado do microfone, ele começa a "escutar" e enviar a medição via MQTT a cada 1 segundo, além de enviar a informação que o Microfone está ligado. 
+O dashboard irá ficar com o microfone ligado, e se clicar no botão do dashboard, ele desligar o microfone no dispositivo.
+
+Ambos os botões podem ser ligados remotamente, ou diretamente no dispositivo.
 
 Na parte de codificação em ArduinoIDE, separei o código em vários arquivos, para melhor compreensão:
  - display.h (codificação do display OLED)
