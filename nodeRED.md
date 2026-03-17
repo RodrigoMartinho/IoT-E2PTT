@@ -1,8 +1,8 @@
 # Instalação e configuração
-
-  →sudo apt install nodejs npm
-  →sudo npm install -g --unsafe-perm node-red
-
+```console
+  sudo apt install nodejs npm
+  sudo npm install -g --unsafe-perm node-red
+```
   Liberar a porta 1880 no Firewall do Google
 
 # Segurança no node-RED
