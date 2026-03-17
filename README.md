@@ -28,7 +28,7 @@ Trabalho da matéria Plataformas de prototipação para IoT
 
 A ideia desse projeto é que o sistema vai se conectar com WiFi (utilizando biblioteca wifimanager para não deixar senhas de wifi salvas no código).
 Ao ligar o dispositivo, ele inicia em modo Access Point, efetua a conexão na rede que ele gera (Config_Decibelimetro_S3) e ai, seleciona uma rede
-e insere a senha dessa rede.
+e insere a senha dessa rede. Abrir o endereço 192.168.4.1 no navegador do celular para configurar a rede.
 
 Após conectado ao Wifi, o sistema inicializa o visor com as informações de Wifi ligado/desligado, led ligado/desligado e microfone ligado/desligado.
 
