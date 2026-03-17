@@ -8,7 +8,7 @@
 
 Caso não tenha o nano instalado
 ```console
-  → sudo apt install nano (se não tiver o nano instalado)
+  → sudo apt install nano
 ```
 ```console
   sudo nano /etc/mosquitto/mosquitto.conf
