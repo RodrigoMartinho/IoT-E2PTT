@@ -1,12 +1,18 @@
 # Instalação do MySQL no Linux
-  ```console
-  → sudo apt install mysql-server -y
+```console
+  sudo apt install mysql-server -y
+```
 
-  → sudo mysql_secure_installation 
+# Segurança no MySQL  
+```console
+  sudo mysql_secure_installation 
 ```
 Selecione o método de senha 0 - Baixo | 1 - Medio | 2 - Alto e o restante coloquei tudo Y (sim)
 
-  → sudo mysql (abrir o mysql)
+# Executar o MySQL
+```console
+  sudo mysql
+```
 
 # Criar o Database
 ```sql
@@ -17,22 +23,27 @@ Selecione o método de senha 0 - Baixo | 1 - Medio | 2 - Alto e o restante coloq
 ```sql
   CREATE USER 'iot'@'localhost' IDENTIFIED BY 'IoT2026#'; 
 ```
+
 # Dar permissão para o usuário no banco criado
 ```sql  
-  GRANT ALL PRIVILEGES ON IoT.* TO 'iot'@'localhost'; 
+  GRANT ALL PRIVILEGES ON IoT.* TO 'iot'@'localhost';
 
   FLUSH PRIVILEGES;
+
   EXIT;
 ```
 
 # Acessar o MySQL 
-→ mysql -u iot -p (após ENTER, inserir a senha do usuário)
+```console
+  mysql -u iot -p
+```
 
 ```sql
-USE IoT;
+  USE IoT;
 ```
+
 # Criação das tabelas
 ```sql
-CREATE TABLE Historico (id int NOT NULL AUTO_INCREMENT, data_hora timestamp NULL DEFAULT ((now() - interval 3 hour)), sensor varchar(10), status varchar(3) DEFAULT 'OFF', PRIMARY KEY (id));
-CREATE TABLE Medicoes (id int NOT NULL auto_increment, data_hora timestamp NULL DEFAULT ((now() - interval 3 hour)), sensor varchar(10), valor decimal(5,2), PRIMARY KEY (id));
+  CREATE TABLE Historico (id int NOT NULL AUTO_INCREMENT, data_hora timestamp NULL DEFAULT ((now() - interval 3 hour)), sensor varchar(10), status varchar(3) DEFAULT 'OFF', PRIMARY KEY (id));
+  CREATE TABLE Medicoes (id int NOT NULL auto_increment, data_hora timestamp NULL DEFAULT ((now() - interval 3 hour)), sensor varchar(10), valor decimal(5,2), PRIMARY KEY (id));
 ```
