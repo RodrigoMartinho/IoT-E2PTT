@@ -23,8 +23,8 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LED_RGB, NEO_GRB + NEO_KHZ
 
 Temporizador timerMic(1000);       //Captura do microfone - 1 segundo 
 Temporizador timerWifi(10000);     //Status do WiFi       - 10 segundos 
-Temporizador timerDisplay(500);    //Tela                  - 1/2 segundo
-Temporizador timerMQTT(5000);      //MQTT                 - 5 segundos
+Temporizador timerDisplay(500);    //Tela                 - 1/2 segundo
+Temporizador timerMQTT(1000);      //MQTT                 - 1 segundo
 
 void acenderLuz(){
   strip.setPixelColor(0, strip.Color(255, 0, 0)); // Vermelho
@@ -63,8 +63,7 @@ void statusBotao() {
 
     desenharTela(valorDbAtual, luzLigada, wifiOk, micLigado); 
   
-    Serial.print("O status mudou para: ");
-    Serial.println(luzLigada ? "ACESO" : "APAGADO");
+    Serial.println("Luz: " + String(luzLigada ? "ACESA" : "APAGADA"));
 
     // Pequeno delay para debounce (evita ruído elétrico)
     delay(50); 
@@ -79,19 +78,18 @@ void statusBotaoMic() {
   if (botaoMicUltimoEstado == LOW && botaoMicEstadoAtual == HIGH) {
     micLigado = !micLigado; 
 
+    client.publish(topic_som_state, (micLigado ? "ON" : "OFF"), true); 
+
     desenharTela(valorDbAtual, luzLigada, wifiOk, micLigado); 
 
-    Serial.print("Microfone: ");
-    Serial.println(micLigado ? "LIGADO" : "DESLIGADO");
-
-    delay(50); 
+    Serial.println("Microfone: " + String(micLigado ? "LIGADO" : "DESLIGADO"));
   }
 
   botaoMicUltimoEstado = botaoMicEstadoAtual;
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
-  Serial.println("Mensagem MQTT recebida!");
+  Serial.println("Mensagem MQTT recebida! " + String(topic));
 
   if (String(topic) == topic_luz_set) {
     luzLigada = interpretarPayload(payload, length);
@@ -105,6 +103,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
     // Força a atualização do display com os dados atuais
     // bool wifiOk = (WiFi.status() == WL_CONNECTED);
     // desenharTela(valorDbAtual, luzLigada, wifiOk, micLigado);
+  }else  if (String(topic) == topic_som_set) {
+    micLigado = interpretarPayload(payload, length);
   }
 }
 
@@ -150,10 +150,6 @@ void loop() {
 
     if (!wifiOk) {
         Serial.println("WiFi Desconectado... tentando reconectar em background.");
-    }else{
-      if (micLigado) {        
-        enviar_decibeis(valorDbAtual);
-      }
     }
   } 
 
@@ -161,6 +157,8 @@ void loop() {
      valorDbAtual = lerMic();      
   }
 
-
+  if (micLigado && timerMQTT.pronto() ){
+      enviar_decibeis(valorDbAtual);
+  }
 
 }

@@ -10,9 +10,11 @@ const char* mqtt_user = "iot";
 const char* mqtt_pass = "IoT2026#";
 
 //Tópicos
-const char* topic_luz_set   = "monitoramento/luz/set";
-const char* topic_luz_state = "monitoramento/luz/status";
-const char* topic_som_db    = "monitoramento/som";
+const char* topic_luz_set    = "monitoramento/luz/set";
+const char* topic_luz_state  = "monitoramento/luz/status";
+const char* topic_som_db     = "monitoramento/som";
+const char* topic_som_set    = "monitoramento/som/set";
+const char* topic_som_state  = "monitoramento/som/status";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -56,6 +58,7 @@ void reconnectMqtt() {
   if (client.connect("ESP32_Luz_Cliente", mqtt_user, mqtt_pass)) {
     Serial.println("Conectado!");
     client.subscribe(topic_luz_set);
+    client.subscribe(topic_som_set);
     client.publish(topic_luz_state, "OFF");
   } else {
     Serial.print("Falhou, rc=");
