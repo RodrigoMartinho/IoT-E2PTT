@@ -16,7 +16,7 @@ Abrir o arquivo de configurações do mosquitto
 ```
   Inserir as seguintes linhas (sem segurança):  \
     listener 1883  \
-    allow_anonymous true \ 
+    allow_anonymous true \
   
   aperte CTRL + X para salvar
 
