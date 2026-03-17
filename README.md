@@ -22,7 +22,7 @@ Trabalho da matéria Plataformas de prototipação para IoT
  - Mosquitto - MQTT (instruções de instalação e configuração no arquivo  [Mosquitto.md](Mosquitto.md))
  - NodeRED (instruções de instalação e configuração no arquivo [nodeRED.md](nodeRED.md).
             Criação de fluxos via nodeRED, para comunicação via MQTT e salvar os dados em MySQL. Fluxos no arquivo [fluxos.json](fluxos.json)).
- - ArduinoIDE para codificar o ESP32 (bibliotecas  instaladas no ArduinoIDE: PubSubClient, WiFiManager, Adafruit SSD1306) 
+ - ArduinoIDE para codificar o ESP32 (bibliotecas  instaladas: PubSubClient, WiFiManager, Adafruit SSD1306) 
 
 # Como o projeto funciona
 
