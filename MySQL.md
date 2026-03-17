@@ -1,9 +1,9 @@
 # Instalação do MySQL no Linux
-  
+  ```console
   → sudo apt install mysql-server -y
 
   → sudo mysql_secure_installation 
-
+```
 Selecione o método de senha 0 - Baixo | 1 - Medio | 2 - Alto e o restante coloquei tudo Y (sim)
 
   → sudo mysql (abrir o mysql)
