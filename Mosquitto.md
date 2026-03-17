@@ -1,25 +1,37 @@
+
 # Instalação e Configuração do Mosquitto
 
-  → sudo apt install mosquitto mosquitto-clients
+```console
+  sudo apt install mosquitto mosquitto-clients
+```
+# Liberar a porta 1883
 
+Caso não tenha o nano instalado
+```console
   → sudo apt install nano (se não tiver o nano instalado)
-  → sudo nano /etc/mosquitto/mosquitto.conf
-
+```
+```console
+  sudo nano /etc/mosquitto/mosquitto.conf
+```
   Inserir as seguintes linhas (sem segurança):
     listener 1883 
     allow_anonymous true
   
   aperte CTRL + X para salvar
 
-  → sudo systemctl enable mosquitto
-  → sudo systemctl start mosquitto
+```console
+  sudo systemctl enable mosquitto
+  sudo systemctl start mosquitto
+```
   
 # Liberar a porta 1883 no Firewall do Google
 
 # Segurança no MQTT
+```console
   → sudo mosquitto_passwd -c /etc/mosquitto/passwd <usuario>
 
   → sudo nano /etc/mosquitto/mosquitto.conf
+```
 
   Inserir as seguintes linhas:
     listener 1883 0.0.0.0
