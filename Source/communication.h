@@ -4,6 +4,7 @@
 #include <WiFi.h>  
 #include <PubSubClient.h>
 #include <WiFiManager.h>
+#include <HTTPClient.h>
 
 const char* mqtt_server = "iotifspcat.ddns.net";
 const char* mqtt_user = "iot";
@@ -81,5 +82,32 @@ void enviar_decibeis(float db) {
        Serial.println("Envio decibeis MQTT");   
     }
 }
+
+void enviarDadosHTTP(float temp, int umid, String desc) {
+  if(WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
+    
+    // Altere para o IP do seu servidor Linux
+    http.begin("http://18.224.24.167/salvar.php"); 
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    // Monta a String de dados igual ao formulário que o PHP espera
+    String dadosPost = "temperatura=" + String(temp) + 
+                       "&umidade=" + String(umid) + 
+                       "&descricao=" + desc;
+
+    int httpResponseCode = http.POST(dadosPost);
+
+    if (httpResponseCode > 0) {
+      Serial.print("Resposta do Servidor: ");
+      Serial.println(httpResponseCode);
+    } else {
+      Serial.print("Erro no envio: ");
+      Serial.println(httpResponseCode);
+    }
+    http.end();
+  }
+}
+
 
 #endif
