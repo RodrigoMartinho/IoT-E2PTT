@@ -88,7 +88,7 @@ void enviarDadosHTTP(float temp, int umid, String desc) {
     HTTPClient http;
     
     // Altere para o IP do seu servidor Linux
-    http.begin("http://18.224.24.167/salvar.php"); 
+    http.begin("http://iotifspcat.ddns.net/salvar.php"); 
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
     // Monta a String de dados igual ao formulário que o PHP espera
@@ -108,6 +108,5 @@ void enviarDadosHTTP(float temp, int umid, String desc) {
     http.end();
   }
 }
-
 
 #endif
