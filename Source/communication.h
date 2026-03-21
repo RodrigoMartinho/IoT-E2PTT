@@ -113,21 +113,22 @@ void lerMedicoes(){
   if (WiFi.status() == WL_CONNECTED) {
     HTTPClient http;
 
-  http.begin("http://iotifspcat.ddns.net/contar_medicoes.php"); 
+    http.begin("http://iotifspcat.ddns.net/contar_medicoes.php"); 
 
-  int httpResponseCode = http.GET();
+    int httpResponseCode = http.GET();
 
-  if (httpResponseCode > 0) {
-    String payload = http.getString();
-    Serial.println("Resposta da API:");
-    Serial.println(payload);
+    if (httpResponseCode > 0) {
+      String payload = http.getString();
+      Serial.println("Resposta da API:");
+      Serial.println(payload);
 
-  } else {
-    Serial.print("Erro na requisição HTTP: ");
-    Serial.println(httpResponseCode);
-  }
+    } else {
+      Serial.print("Erro na requisição HTTP: ");
+      Serial.println(httpResponseCode);
+    }
 
-  http.end();      
+    http.end();     
+  } 
 }
 
 #endif

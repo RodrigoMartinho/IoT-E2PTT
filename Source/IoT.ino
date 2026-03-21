@@ -25,7 +25,7 @@ Temporizador timerMic(1000);       //Captura do microfone - 1 segundo
 Temporizador timerWifi(10000);     //Status do WiFi       - 10 segundos 
 Temporizador timerDisplay(500);    //Tela                 - 1/2 segundo
 Temporizador timerMQTT(1000);      //MQTT                 - 1 segundo
-
+Temporizador timerGet(10000);      //HTTP Get
 void acenderLuz(){
   strip.setPixelColor(0, strip.Color(255, 0, 0)); // Vermelho
   strip.show();
@@ -146,19 +146,22 @@ void loop() {
   statusBotaoMic();
 
   if (timerWifi.pronto()) {
-     wifiOk = (WiFi.status() == WL_CONNECTED);
+    wifiOk = (WiFi.status() == WL_CONNECTED);
 
     if (!wifiOk) {
-        Serial.println("WiFi Desconectado... tentando reconectar em background.");
+      Serial.println("WiFi Desconectado... tentando reconectar em background.");
     }
   } 
 
   if (micLigado && timerMic.pronto()) {
-     valorDbAtual = lerMic();      
+    valorDbAtual = lerMic();      
   }
 
   if (micLigado && timerMQTT.pronto() ){
-      enviar_decibeis(valorDbAtual);
+    enviar_decibeis(valorDbAtual);
   }
 
+  if (timerGet.pronto()) {
+    lerMedicoes();
+  }
 }
