@@ -1,16 +1,13 @@
-# Instalação 
+# Instalação do Apache
 ```console
 sudo apt install apache2 -y
-
-sudo ufw allow 'Apache Full'
 ```
 
+Liberar o tráfego HTTP no Google Cloud Platform
 
 # Instalação do PHP
 ```console
 sudo apt install php libapache2-mod-php php-mysql -y
-
-
 ```
 
 # Criação do script PHP para retornar as medições em JSON
