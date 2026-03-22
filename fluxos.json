@@ -90,7 +90,7 @@
     {
         "id": "b5818edf498a04ef",
         "type": "ui-page",
-        "name": "Microfone",
+        "name": "Controle de Intensidade Sonora",
         "ui": "4c8421628cebe4a2",
         "path": "/page1",
         "icon": "home",
@@ -130,7 +130,7 @@
         "page": "b5818edf498a04ef",
         "width": "6",
         "height": 1,
-        "order": 1,
+        "order": 2,
         "showTitle": false,
         "className": "",
         "visible": "true",
@@ -177,7 +177,7 @@
         "id": "56e3cde2fed957ac",
         "type": "ui-group",
         "name": "Luz",
-        "page": "25cb904e607d1f33",
+        "page": "b5818edf498a04ef",
         "width": 6,
         "height": 1,
         "order": 1,
@@ -408,7 +408,7 @@
         "pointRadius": 4,
         "showLegend": true,
         "removeOlder": 1,
-        "removeOlderUnit": "3600",
+        "removeOlderUnit": "60",
         "removeOlderPoints": "",
         "colors": [
             "#0095ff",
@@ -576,7 +576,138 @@
         ]
     },
     {
-        "id": "3d36d9dc3d846679",
+        "id": "facafa14e4286568",
+        "type": "debug",
+        "z": "f00ad3ea53f3c7ed",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "b6a61faacf31608d",
+        "type": "template",
+        "z": "f00ad3ea53f3c7ed",
+        "name": "",
+        "field": "topic",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "SELECT id, valor, data_hora\nFROM Medicoes \nORDER BY id DESC\nLIMIT 10",
+        "output": "str",
+        "x": 380,
+        "y": 740,
+        "wires": [
+            [
+                "a180bf9f1b1d5660"
+            ]
+        ]
+    },
+    {
+        "id": "e8db9366f240d558",
+        "type": "ui-table",
+        "z": "f00ad3ea53f3c7ed",
+        "group": "56e3cde2fed957ac",
+        "name": "Histórico",
+        "label": "",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "maxrows": "0",
+        "passthru": false,
+        "autocols": false,
+        "showSearch": true,
+        "deselect": true,
+        "selectionType": "none",
+        "columns": [
+            {
+                "title": "Código",
+                "key": "id",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            },
+            {
+                "title": "Valor",
+                "key": "valor",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            },
+            {
+                "title": "Data/Hora",
+                "key": "data_hora",
+                "keyType": "key",
+                "type": "text",
+                "width": "",
+                "align": "start"
+            }
+        ],
+        "mobileBreakpoint": "sm",
+        "mobileBreakpointType": "defaults",
+        "action": "replace",
+        "className": "",
+        "x": 800,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a180bf9f1b1d5660",
+        "type": "mysql",
+        "z": "f00ad3ea53f3c7ed",
+        "mydb": "4629feaec45f0e15",
+        "name": "MySQL",
+        "x": 580,
+        "y": 740,
+        "wires": [
+            [
+                "e8db9366f240d558"
+            ]
+        ]
+    },
+    {
+        "id": "2295ea314efe234a",
+        "type": "inject",
+        "z": "f00ad3ea53f3c7ed",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 740,
+        "wires": [
+            [
+                "b6a61faacf31608d"
+            ]
+        ]
+    },
+    {
+        "id": "184350c5faf06c0f",
         "type": "global-config",
         "env": [],
         "modules": {
